@@ -1,0 +1,9 @@
+storage.some.site {
+    log stdout
+    errors
+    proxy / 127.0.0.1:9000 {
+        header_upstream Host {host}
+        header_upstream X-Real-IP {remote}
+    }
+    tls some@email.com
+}

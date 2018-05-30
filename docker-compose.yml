@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    command: server /data
+    volumes:
+      - /mnt/data:/data
+      - /mnt/config:/root/.minio
+    ports:
+      - '9000:9000'
+    network_mode: "host"
+  caddy:
+    image: abiosoft/caddy
+    container_name: caddy
+    volumes:
+      - ./Caddyfile:/etc/Caddyfile
+      - ./.caddy:/root/.caddy
+    environment:
+      - ACME_AGREE=true
+    ports:
+      - "443:443"
+    network_mode: "host"
